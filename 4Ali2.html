@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje Privado</title>
+    <style>
+        :root {
+            --negro-sobre: #121212;
+            --negro-interior: #252525;
+            --rojo-corazon: #d63031;
+            --papel: #ffffff;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0e0e0;
+            font-family: 'Georgia', serif;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: var(--negro-sobre);
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            z-index: 1;
+        }
+
+        /* La Carta modificada con overflow */
+        .letter {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background: var(--papel);
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.6s ease-in-out, max-height 0.6s ease, z-index 0.6s;
+            z-index: 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            
+            /* --- Cambios para el texto largo --- */
+            max-height: 180px; 
+            overflow-y: auto; 
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid var(--negro-sobre);
+            transform-origin: top;
+            transition: transform 0.4s ease-in-out, z-index 0.4s;
+            z-index: 5;
+        }
+
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid var(--negro-interior);
+            z-index: 3;
+        }
+
+        .heart {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background-color: var(--rojo-corazon);
+            z-index: 6;
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: transform 0.4s ease-in-out, opacity 0.4s;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: var(--rojo-corazon);
+            border-radius: 50%;
+        }
+        .heart::before { left: -13px; }
+        .heart::after { top: -13px; }
+
+        /* --- Animaciones al Abrir --- */
+        .container.open .flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .container.open .letter {
+            transform: translateY(-130px);
+            z-index: 4;
+            max-height: 300px; /* Se expande cuando se abre */
+        }
+
+        .container.open .heart {
+            opacity: 0;
+            transform: translate(-50%, -150px) rotate(45deg) scale(0);
+        }
+
+        .date { font-size: 10px; text-align: right; color: #777; }
+        .dest { font-weight: bold; margin: 10px 0; border-bottom: 1px solid #eee; }
+        .text { font-size: 13px; line-height: 1.5; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="container" onclick="this.classList.toggle('open')">
+        <div class="flap"></div>
+        <div class="heart"></div>
+
+        <div class="letter">
+            <div class="date">5 de marzo, 2026</div>
+            <div class="dest">Para: Mi niña hermosa</div>
+            <div class="text">
+                Mi niña hermosa, sé que estos detalles se han vuelto algo escasos, pero quiero que sepas que llevo en mente cada carta, cada regalo, cada momento que paso contigo, cada sonrisa y cada oportunidad que tengo de decirte: 'Te amoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo' Me encanta estar contigo, mi niña; desde hace 237 días te conozco y, desde esa primera noche que te pensé, no hubo momento en el cual salieras de mi mente.
+
+Te quiero agradecer por todo lo que me has dado: momentos y cosas materiales, pero, en especial, tu compañía, el no soltarme en momentos tristes, enojados o que no son de nuestro agrado. Por todo eso, te doy las gracias y te pido perdón si te hice pasar un mal momento.
+
+Te amo tantísimo, mi niña; no sabes en verdad cuánto me gustas. Aunque llevamos 200 días de novios, no te he dejado de amar, pensar y procurar. Cada día me gustas más, me enamoro muchísimo más de ti y me enseñas cosas nuevas. Sé que me falta mucho por aprender sobre el amor, pero quiero aprenderlo y aplicarlo contigo, solo contigo y con nadie más.
+
+Te amo muchísimo, mi niña. ¿O debo decir 'joven'?
+        
+            </div>
+        </div>
+
+        <div class="envelope-wrapper"></div>
+        <div class="pocket"></div>
+    </div>
+
+</body>
+</html>
